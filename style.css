@@ -1,0 +1,789 @@
+/* Genel Sayfa Düzeni */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column; /* Dikey hizalama için */
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #e66465, #9198e5); /* Fotoğraftaki degrade renk */
+    overflow-x: hidden; /* Yatay kaydırmayı engelle */
+}
+
+/* Kapsayıcı ve Kart Stilleri */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1; /* Konteynerin dikeyde büyümesini sağlar */
+}
+
+.card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px; /* Bu değer index.html ve password.html için geçerli */
+    width: 90%; /* Mobil uyumluluk için */
+    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağlar */
+}
+
+/* Başlık ve Buton Stilleri (Ortak) */
+.title {
+    font-family: 'Brush Script MT', 'cursive';
+    font-size: 3em;
+    color: #e66465;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.button {
+    background-color: #91456d;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #7b3a5a;
+}
+
+/* Input ve Açıklama Stilleri (Ortak) */
+.input-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.input-field {
+    width: 80%;
+    padding: 15px;
+    border: 2px solid #9198e5;
+    border-radius: 10px;
+    font-size: 1.1em;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağlar */
+}
+
+.input-field:focus {
+    border-color: #e66465;
+}
+
+.description {
+    font-size: 1.1em;
+    color: #555;
+    margin-top: 15px;
+}
+
+.error-message {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Ana Sayfa Özel Stilleri */
+.main-header {
+    background-color: white;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; /* Sayfa kaydırıldığında üstte kalır */
+    top: 0;
+    z-index: 1000; /* Diğer elementlerin üzerinde görünmesini sağlar */
+    box-sizing: border-box;
+}
+
+.menu-icon {
+    font-size: 1.2em;
+    color: #91456d;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.header-date {
+    font-size: 1.1em;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer; /* Takvim açılması için imleç değişimi */
+}
+
+.header-title {
+    font-family: 'Brush Script MT', 'cursive';
+    font-size: 2.8em; /* Yazı boyutu büyütüldü */
+    color: #e66465;
+    margin: 0;
+    flex-grow: 1; /* Ortada kalmasını sağlar */
+    text-align: center;
+}
+
+/* Yan Menü Stilleri */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Başlangıçta gizli */
+    width: 250px;
+    height: 100%;
+    background-color: #f8f8f8;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    z-index: 1001;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.side-menu.active {
+    left: 0; /* Açıkken görünür */
+}
+
+.menu-close-icon {
+    font-size: 1.2em;
+    color: #91456d;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-menu li {
+    padding: 15px 20px;
+    font-size: 1.1em;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.side-menu li:hover {
+    background-color: #eee;
+    color: #91456d;
+}
+
+.side-menu li i {
+    color: #91456d; /* İkon rengi */
+}
+
+/* Ana İçerik Alanı */
+.main-content {
+    padding: 20px;
+    width: 100%;
+    max-width: 900px; /* İçeriğin çok geniş olmasını engeller */
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.content-section {
+    display: none; /* Varsayılan olarak tüm bölümler gizli */
+}
+
+.content-section.active {
+    display: block; /* Aktif bölüm görünür */
+}
+
+.main-card {
+    padding: 30px;
+    margin-bottom: 20px;
+    max-width: 800px; /* Ana kartın maksimum genişliği artırıldı */
+    width: 100%; /* Kapsayıcısının %100'ünü kullanır */
+    box-sizing: border-box;
+}
+
+.anniversary-text {
+    font-family: 'Brush Script MT', 'cursive';
+    font-size: 1.8em; /* Yazı boyutuna dikkat! */
+    color: #e66465;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-family: 'Brush Script MT', 'cursive';
+    font-size: 2.2em; /* Yazı boyutuna dikkat! */
+    color: #91456d;
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px dashed #eee;
+    padding-bottom: 10px;
+}
+
+/* Anı Kartı Stilleri */
+.memory-card, .mood-card, .surprise-memory-card {
+    background-color: #fdfdff; /* Hafif bir arka plan */
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+}
+
+.selected-memory-date {
+    font-size: 1.1em;
+    color: #777;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.memory-content {
+    min-height: 100px;
+    text-align: left;
+    color: #333;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.image-placeholder {
+    background-color: #f0f0f0;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    border-radius: 10px;
+    margin-top: 15px;
+    overflow: hidden; /* Resimlerin taşmasını engeller */
+}
+
+.image-placeholder img, .image-placeholder video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.memory-info {
+    font-size: 0.95em;
+    color: #777;
+    margin-top: 20px;
+}
+
+.memory-info a {
+    color: #91456d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.memory-info a:hover {
+    text-decoration: underline;
+}
+
+/* Ruh Hali Kartı Stilleri */
+.mood-prompt {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.mood-select, .mood-input {
+    width: 90%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.mood-button {
+    width: 90%;
+    padding: 12px;
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+.mood-status {
+    font-size: 0.95em;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* Modal Stilleri (Takvim, Anı Ekleme) */
+.modal {
+    display: none; /* Varsayılan olarak gizli */
+    position: fixed;
+    z-index: 2000; /* Menüden daha üstte */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6); /* Yarı saydam siyah arka plan */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.modal-title {
+    font-family: 'Brush Script MT', 'cursive';
+    font-size: 2.5em;
+    color: #91456d;
+    margin-bottom: 25px;
+}
+
+/* Takvim Stilleri */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #91456d;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    display: flex; /* İkon ve metni hizalamak için */
+    align-items: center;
+    gap: 5px;
+}
+
+.calendar-header button:hover {
+    background-color: #eee;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Haftanın 7 günü */
+    gap: 5px;
+    text-align: center;
+}
+
+.day-name {
+    font-weight: bold;
+    color: #777;
+    padding: 10px 0;
+    font-size: 0.9em;
+}
+
+.calendar-day {
+    padding: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px; /* Gün kutularının sabit yüksekliği */
+    box-sizing: border-box;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.calendar-day.inactive {
+    color: #ccc;
+    cursor: default;
+    background-color: transparent;
+}
+
+.calendar-day.inactive:hover {
+    background-color: transparent;
+    transform: none;
+}
+
+.calendar-day.has-memory {
+    background-color: #ffe0e6; /* Anı olan günler için hafif pembe */
+    font-weight: bold;
+    color: #e66465;
+}
+
+.calendar-day.has-memory .heart-icon {
+    color: #e66465;
+    font-size: 0.8em;
+    margin-top: 3px;
+}
+
+.calendar-day.current-day {
+    border: 2px solid #91456d;
+    background-color: #f0e6ff;
+}
+
+/* Anı Ekleme Modalı */
+.textarea-field {
+    min-height: 150px;
+    resize: vertical; /* Sadece dikeyde boyutlandırmaya izin ver */
+}
+
+.file-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+/* Şiirler, Galeri, Yapılacaklar, Filmler, Özel Günler */
+.add-item-container {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-list, .poem-list, .gallery-grid {
+    text-align: left;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.no-content {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Yapılacaklar/Filmler Listesi Öğesi */
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fdfdff;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.list-item.completed {
+    text-decoration: line-through;
+    color: #999;
+    background-color: #f5f5f5;
+}
+
+.item-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.item-text {
+    flex-grow: 1;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: #e66465;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.delete-button:hover {
+    color: #c0392b;
+}
+
+/* Şiirler Listesi */
+.poem-item {
+    background-color: #fdfdff;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.poem-item h3 {
+    font-family: 'Brush Script MT', 'cursive';
+    font-size: 1.8em;
+    color: #91456d;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.poem-item p {
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: #444;
+    white-space: pre-wrap; /* Boşlukları ve satır atlamalarını korur */
+}
+
+/* Galeri Stilleri */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Esnek sütunlar */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    cursor: pointer;
+    position: relative;
+}
+
+.gallery-item img, .gallery-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Resmi veya videoyu kutuya sığdırır */
+    display: block;
+}
+
+.gallery-item .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 0.9em;
+}
+
+/* Hakkımızda Bölümü */
+.editable-content {
+    background-color: #fdfdff;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+    text-align: left;
+}
+
+.editable-content[contenteditable="true"] {
+    border: 1px dashed #91456d;
+    background-color: #fff;
+}
+
+/* Sürpriz Anılar */
+.surprise-text {
+    font-size: 1.1em;
+    color: #555;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.surprise-memory-card {
+    margin-top: 30px;
+    min-height: 200px; /* İçerik yokken de belirli bir yükseklik sağlar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mesaj Kutusu Stilleri */
+.message-box {
+    display: none; /* Varsayılan olarak gizli */
+    position: fixed;
+    z-index: 3000; /* En üstte */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.message-box-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    max-width: 350px;
+    width: 90%;
+}
+
+.message-box-content p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.message-box-content button {
+    background-color: #91456d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.message-box-content button:hover {
+    background-color: #7b3a5a;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .main-header {
+        flex-wrap: wrap; /* Başlık elemanlarının alt alta geçmesini sağlar */
+        justify-content: center;
+        text-align: center;
+    }
+    .header-date {
+        order: 3; /* Tarihi en alta alır */
+        width: 100%;
+        margin-top: 10px;
+    }
+    .header-title {
+        font-size: 2em;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .menu-icon {
+        margin-right: auto; /* Menü ikonunu sola yaslar */
+    }
+    .card {
+        padding: 25px;
+    }
+    .title {
+        font-size: 2.5em;
+    }
+    .button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+    .input-field {
+        padding: 12px;
+        font-size: 1em;
+    }
+    .section-title {
+        font-size: 1.8em;
+    }
+    .anniversary-text {
+        font-size: 1.5em;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .calendar-day {
+        min-height: 40px;
+        font-size: 0.9em;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.8em;
+    }
+    .menu-icon span {
+        display: none; /* Mobil cihazlarda "MENÜ" yazısını gizle */
+    }
+    .side-menu {
+        width: 200px;
+    }
+    .side-menu li {
+        font-size: 1em;
+        padding: 12px 15px;
+    }
+    .card {
+        padding: 20px;
+    }
+    .title {
+        font-size: 2em;
+    }
+    .button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+    .input-field {
+        font-size: 0.9em;
+    }
+    .section-title {
+        font-size: 1.6em;
+    }
+    .anniversary-text {
+        font-size: 1.3em;
+    }
+    .modal-content {
+        padding: 15px;
+    }
+    .calendar-day {
+        font-size: 0.8em;
+    }
+}
