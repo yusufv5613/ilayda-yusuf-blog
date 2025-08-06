@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yusuf & İlayda'nın Aşk Günlüğü</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome ikonları için CDN (Menü ikonu, kalp ikonu vb. için) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Üst Başlık Çubuğu -->
+    <header class="main-header">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i> <!-- Menü ikonu -->
+            <span>MENÜ</span>
+        </div>
+        <!-- Tarih elementine onclick olayı eklendi -->
+        <span class="header-date" id="currentDate" onclick="openCalendarModal()">5 Ağustos 2025</span>
+        <h1 class="header-title">Yusuf & İlayda'nın Aşk Günlüğü</h1>
+    </header>
+
+    <!-- Yan Menü -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-close-icon" onclick="toggleMenu()">
+            <i class="fas fa-times"></i> <!-- Kapatma ikonu -->
+            <span>Menü</span>
+        </div>
+        <ul>
+            <li onclick="showSection('home')"><i class="fas fa-home"></i> Ana Sayfa</li>
+            <li onclick="showSection('poems')"><i class="fas fa-feather-alt"></i> Şiirler</li>
+            <li onclick="showSection('gallery')"><i class="fas fa-images"></i> Anılarımız (Galeri)</li>
+            <li onclick="showSection('todo')"><i class="fas fa-tasks"></i> Yapılacaklar Listesi</li>
+            <li onclick="showSection('movies')"><i class="fas fa-film"></i> İzlenecek Filmler</li>
+            <li onclick="showSection('specialDays')"><i class="fas fa-calendar-alt"></i> Özel Günler</li>
+            <li onclick="showSection('about')"><i class="fas fa-info-circle"></i> Hakkımızda</li>
+            <li onclick="showSection('surprise')"><i class="fas fa-gift"></i> Sürpriz Anılar</li>
+        </ul>
+    </nav>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="main-content">
+
+        <!-- Ana Sayfa Bölümü (Varsayılan olarak görünür) -->
+        <section id="home" class="content-section active">
+            <div class="card main-card">
+                <p class="anniversary-text" id="anniversaryText">İlk Tanışma Günümüzden Beri 417 Gün Geçti! ❤️</p>
+                <h2 class="section-title">Bugüne Ait Anı (Veya Seçili Anı)</h2>
+
+                <div class="memory-card">
+                    <p id="selectedMemoryDate" class="selected-memory-date"></p>
+                    <div id="memoryContent" class="memory-content">
+                        <!-- Anı içeriği buraya gelecek -->
+                        <p>Bu Güne Ait Bir Anı Yok</p>
+                        <div class="image-placeholder">İçerik Yok</div>
+                    </div>
+                    <p class="memory-info">
+                        Bu tarihe ait bir anı veya içerik bulunmuyor. Takvimden başka bir gün seçebilir veya
+                        <a href="#" onclick="openMemoryModal()">yeni bir anı ekleyebilirsiniz.</a>
+                    </p>
+                </div>
+
+                <h2 class="section-title">Bugünkü Ruh Halimiz</h2>
+                <div class="mood-card">
+                    <p class="mood-prompt">Senin Ruh Halin:</p>
+                    <select id="myMood" class="mood-select">
+                        <option value="mutlu">😊 Mutlu</option>
+                        <option value="uzgun">😔 Üzgün</option>
+                        <option value="heyecanli">🤩 Heyecanlı</option>
+                        <option value="yorgun">😴 Yorgun</option>
+                        <option value="sinirli">😠 Sinirli</option>
+                        <option value="ask">❤️ Aşık</option>
+                    </select>
+                    <input type="text" id="moodReason" placeholder="Neden bu ruh halindesin?" class="input-field mood-input">
+                    <button class="button mood-button" onclick="saveMood()">Ruh Halini Kaydet</button>
+                    <p class="mood-status" id="myMoodStatus">Senin son ruh halin: Henüz kaydetmedin.</p>
+                    <p class="mood-status" id="partnerMoodStatus">İlayda'nın son ruh hali: Henüz kaydetmedi.</p>
+                </div>
+
+                <!-- Takvim Modalı -->
+                <div id="calendarModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" onclick="closeCalendarModal()">&times;</span>
+                        <h2 class="modal-title">Takvim</h2>
+                        <div class="calendar-header">
+                            <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i> Önceki</button>
+                            <span id="monthYear"></span>
+                            <button onclick="changeMonth(1)">Sonraki <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Takvim günleri buraya JavaScript ile eklenecek -->
+                        </div>
+                        <button class="button" onclick="closeCalendarModal()">Kapat</button>
+                    </div>
+                </div>
+
+                <!-- Anı Ekleme Modalı -->
+                <div id="memoryModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" onclick="closeMemoryModal()">&times;</span>
+                        <h2 class="modal-title">Yeni Anı Ekle</h2>
+                        <input type="text" id="memoryTitleInput" placeholder="Anı Başlığı" class="input-field">
+                        <textarea id="memoryTextInput" placeholder="Anınızı buraya yazın..." class="input-field textarea-field"></textarea>
+                        <input type="file" id="memoryImageInput" accept="image/*" class="file-input">
+                        <input type="file" id="memoryVideoInput" accept="video/*" class="file-input">
+                        <button class="button" onclick="saveMemory()">Anıyı Kaydet</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Şiirler Bölümü -->
+        <section id="poems" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">Birbirimize Yazdığımız Şiirler</h2>
+                <div id="poemsList" class="poem-list">
+                    <!-- Şiirler buraya JavaScript ile eklenecek -->
+                    <p class="no-content">Henüz bir şiir eklenmedi.</p>
+                </div>
+                <div class="add-item-container">
+                    <input type="text" id="poemTitleInput" placeholder="Şiir Başlığı" class="input-field">
+                    <textarea id="poemTextInput" placeholder="Şiiri buraya yazın..." class="input-field textarea-field"></textarea>
+                    <button class="button" onclick="addPoem()">Şiir Ekle</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galeri Bölümü -->
+        <section id="gallery" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">Anılarımızın Galerisi</h2>
+                <div id="galleryContent" class="gallery-grid">
+                    <!-- Fotoğraflar ve videolar buraya JavaScript ile eklenecek -->
+                    <p class="no-content">Henüz galeriye fotoğraf veya video eklenmedi.</p>
+                </div>
+                <div class="add-item-container">
+                    <input type="file" id="galleryFileInput" accept="image/*,video/*" multiple class="file-input">
+                    <button class="button" onclick="addGalleryItem()">Galeriye Ekle</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yapılacaklar Listesi Bölümü -->
+        <section id="todo" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">Birlikte Yapılacaklar Listesi</h2>
+                <div id="todoList" class="item-list">
+                    <!-- Yapılacaklar buraya JavaScript ile eklenecek -->
+                    <p class="no-content">Henüz yapılacak bir görev yok.</p>
+                </div>
+                <div class="add-item-container">
+                    <input type="text" id="todoInput" placeholder="Yeni görev ekle." class="input-field">
+                    <button class="button" onclick="addTodoItem()">Ekle</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- İzlenecek Filmler Bölümü -->
+        <section id="movies" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">İzlenecek Filmler Listesi</h2>
+                <div id="movieList" class="item-list">
+                    <!-- Filmler buraya JavaScript ile eklenecek -->
+                    <p class="no-content">Henüz izlenecek bir film yok.</p>
+                </div>
+                <div class="add-item-container">
+                    <input type="text" id="movieInput" placeholder="Yeni film ekle." class="input-field">
+                    <button class="button" onclick="addMovieItem()">Ekle</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Özel Günler Bölümü -->
+        <section id="specialDays" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">Özel Günlerimiz</h2>
+                <div id="specialDaysList" class="item-list">
+                    <!-- Özel günler buraya JavaScript ile eklenecek -->
+                    <p class="no-content">Henüz özel bir gün eklenmedi.</p>
+                </div>
+                <div class="add-item-container">
+                    <input type="text" id="specialDayNameInput" placeholder="Özel Gün Adı" class="input-field">
+                    <input type="date" id="specialDayDateInput" class="input-field">
+                    <button class="button" onclick="addSpecialDay()">Özel Gün Ekle</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hakkımızda Bölümü -->
+        <section id="about" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">Hakkımızda</h2>
+                <div id="aboutContent" class="editable-content">
+                    <p>Bu kısım, Yusuf ve İlayda'nın aşk hikayesini anlatacağımız yerdir. Burayı dilediğiniz gibi düzenleyebilirsiniz.</p>
+                </div>
+                <button class="button" onclick="editAboutContent()">Düzenle</button>
+                <button class="button" onclick="saveAboutContent()" style="display: none;">Kaydet</button>
+            </div>
+        </section>
+
+        <!-- Sürpriz Anılar Bölümü -->
+        <section id="surprise" class="content-section">
+            <div class="card main-card">
+                <h2 class="section-title">Sürpriz Anılar</h2>
+                <p class="surprise-text">Her tıkladığında seni rastgele bir anımıza götüreceğim!</p>
+                <button class="button" onclick="showRandomMemory()">Bana Sürpriz Yap!</button>
+                <div id="randomMemoryDisplay" class="memory-card surprise-memory-card">
+                    <!-- Rastgele anı içeriği buraya gelecek -->
+                    <p class="no-content">Henüz sürpriz bir anı gösterilmedi.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mesaj Kutusu (Alert yerine kullanılacak) -->
+    <div id="messageBox" class="message-box">
+        <div class="message-box-content">
+            <p id="messageBoxText"></p>
+            <button onclick="closeMessageBox()">Tamam</button>
+        </div>
+    </div>
+
+    <!-- script.js dosyasını module olarak yükle -->
+    <script src="script.js" type="module"></script>
+</body>
+</html>
